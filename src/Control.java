@@ -1,11 +1,15 @@
+import java.io.IOException;
+import java.io.*;
 import java.util.*;
 import java.util.stream.Collectors;
 
 public class Control {
     private ArrayList<Instrumento> listaInstrumentos = new ArrayList<>();
     private HashSet<String> autores = new HashSet<>();
+    private final String archivo = "Archivoinstrumentos.csv";
 
     public Control() {
+        cargarDesdeArchivo();
     }
 
     public String mostrarTodos() {
@@ -122,5 +126,50 @@ public class Control {
 
     public void agregarInstrumento(Instrumento inst) {
         listaInstrumentos.add(inst);
+        guardarInstrumentosEnArchivo();
+    }
+
+    public void guardarInstrumentosEnArchivo() {
+        try (PrintWriter pw = new PrintWriter(new FileWriter(archivo))) {
+            for (Instrumento inst : listaInstrumentos) {
+                // Guardar en formato: clave,nombre,autor,tipo,proposito,condicion,evaluacion
+                pw.println(inst.getClave() + "," +
+                        inst.getNombre() + "," +
+                        inst.getAutor() + "," +
+                        inst.getTipo() + "," +
+                        inst.getProposito() + "," +
+                        inst.getTipoCondicion() + "," +
+                        inst.isEvaluacion());
+            }
+        } catch (IOException e) {
+            System.out.println("Error al guardar instrumentos: " + e.getMessage());
+        }
+    }
+
+    private void cargarDesdeArchivo() {
+        File f = new File(archivo);
+        if (!f.exists()) return; // No hay archivo todavía
+
+        try (Scanner sc = new Scanner(f)) {
+            while (sc.hasNextLine()) {
+                String linea = sc.nextLine();
+                String[] partes = linea.split(",");
+                if (partes.length == 7) {
+                    int clave = Integer.parseInt(partes[0]);
+                    String nombre = partes[1];
+                    String autor = partes[2];
+                    String tipo = partes[3];
+                    String proposito = partes[4];
+                    String condicion = partes[5];
+                    boolean evaluacion = Boolean.parseBoolean(partes[6]);
+                    Instrumento inst = new Instrumento(clave, nombre, autor, tipo, proposito, condicion);
+                    inst.setEvaluacion(evaluacion);
+                    listaInstrumentos.add(inst);
+                    registrarAutor(autor);
+                }
+            }
+        } catch (IOException e) {
+            System.out.println("Error al cargar instrumentos: " + e.getMessage());
+        }
     }
 }

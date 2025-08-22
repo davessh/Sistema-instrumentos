@@ -11,6 +11,7 @@ public class Instrumento {
     private boolean evaluacion;
     private String citaEvaluacion;
 
+    //constructor instrumento
     public Instrumento(int clave, String nombre,
                        String autor, String tipo, String proposito, String tipoCondicion) {
         this.clave = clave;
@@ -23,6 +24,7 @@ public class Instrumento {
         this.citaEvaluacion = "";
     }
 
+    //getters y setters
     public int getClave() {
         return clave;
     }
@@ -72,8 +74,9 @@ public class Instrumento {
         this.citaEvaluacion = citaEvaluacion;
     }
 
+    //Método toString que permite imprimir el contenido de un instrumento
     public String toString() {
         return "Autor: " + autor + "\nClave: " + clave + "\nPropósito: " + proposito + "\nCondiciones: " + tipo +
-                "\nCita de la evaluacion:" + citaEvaluacion + "\n\n";
+                "\nTipo de instrumento: " + tipoCondicion + "\n\n";
     }
 }
