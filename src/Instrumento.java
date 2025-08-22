@@ -73,7 +73,7 @@ public class Instrumento {
     }
 
     public String toString() {
-        return "Autor: " + autor + "\nClave: " + clave + "\nTipo: " + proposito + "\nCondiciones: " + tipoCondicion +
-                "\nEvaluacion: " + evaluacion + "Cita de la evaluacion:" + citaEvaluacion + "\n\n";
+        return "Autor: " + autor + "\nClave: " + clave + "\nPropósito: " + proposito + "\nCondiciones: " + tipo +
+                "\nCita de la evaluacion:" + citaEvaluacion + "\n\n";
     }
 }
