@@ -20,7 +20,6 @@ public class Sistema extends JFrame {
         setLayout(new GridLayout(4, 1, 10, 10));
     }
 
-    // Inicializa los botones y sus acciones
     private void inicializarBotones() {
         JButton btnAgregar = crearBotonAgregar();
         JButton btnMostrar = crearBotonMostrar();
@@ -57,7 +56,6 @@ public class Sistema extends JFrame {
         return btn;
     }
 
-    // --- Métodos para acciones ---
     private void agregarInstrumento() {
         try {
             int clave = Integer.parseInt(JOptionPane.showInputDialog(this, "Clave:"));
@@ -151,7 +149,6 @@ public class Sistema extends JFrame {
         }
     }
 
-    // Convierte una lista de instrumentos a String para mostrar
     private String convertirListaAString(ArrayList<Instrumento> lista) {
         StringBuilder sb = new StringBuilder();
         for (Instrumento inst : lista) {
