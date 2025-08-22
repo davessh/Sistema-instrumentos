@@ -77,9 +77,50 @@ public class Sistema extends JFrame {
         });
 
         btnMostrar.addActionListener(e -> {
-            String datos = control.mostrarTodos();
-            JOptionPane.showMessageDialog(this, datos, "Lista de Instrumentos", JOptionPane.INFORMATION_MESSAGE);
+            String[] opcionesMuestra = {"Todos", "Por Autor", "Por Tipo", "Por Condición", "Por Evaluación"};
+            String opcion = (String) JOptionPane.showInputDialog(
+                    this,
+                    "Seleccione cómo mostrar los instrumentos:",
+                    "Mostrar Instrumentos",
+                    JOptionPane.QUESTION_MESSAGE,
+                    null,
+                    opcionesMuestra,
+                    opcionesMuestra[0]
+            );
+
+            if (opcion != null) {
+                String resultado = "";
+                switch (opcion) {
+                    case "Todos":
+                        resultado = control.mostrarTodos();
+                        break;
+                    case "Por Autor":
+                        String autor = JOptionPane.showInputDialog(this, "Ingrese el nombre del autor:");
+                        resultado = control.buscarPorAutor(autor);
+                        break;
+                    case "Por Tipo":
+                        String tipo = JOptionPane.showInputDialog(this, "Ingrese el tipo de instrumento (p. ej. Test):");
+                        resultado = control.buscarPorTipo(tipo);
+                        break;
+                    case "Por Condición":
+                        String condicion = JOptionPane.showInputDialog(this, "Ingrese la condición (p. ej. Estrés):");
+                        resultado = control.buscarPorCondicion(condicion);
+                        break;
+                    case "Por Evaluación":
+                        int resp = JOptionPane.showConfirmDialog(this, "Mostrar instrumentos confiables?", "Evaluación", JOptionPane.YES_NO_OPTION);
+                        boolean evaluacion = (resp == JOptionPane.YES_OPTION);
+                        resultado = control.buscarPorEvaluacion(evaluacion);
+                        break;
+                }
+
+                if (resultado.isEmpty()) {
+                    resultado = "No se encontraron instrumentos con ese criterio.";
+                }
+
+                JOptionPane.showMessageDialog(this, resultado, "Lista de Instrumentos", JOptionPane.INFORMATION_MESSAGE);
+            }
         });
+
 
         btnEliminar.addActionListener(e -> {
             try {
